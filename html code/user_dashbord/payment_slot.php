@@ -152,6 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_payment'])) {
             $transaction_id = 'TXN' . time() . rand(1000, 9999);
         }
 
+        
         $payment_record_saved = true;
         if ($payments_table_exists) {
             $insert_query = "INSERT INTO payments (booking_id, booking_type, user_id, amount, payment_method, payment_status, transaction_id) 
