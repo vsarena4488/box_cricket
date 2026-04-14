@@ -1,0 +1,33 @@
+for forget password using php . i will use Exception.php , PHPMailer.php , SMTP.php files. this work like user will when user will click in forgget password that time the forget password and when enter email then check is email is walid or not , aftre user or admin get otp in email , this otp will work only 2 min. after this will not working , user and admin have only 3 attemp per day to use foeget passeord , when user or admin will enter proper otp the change password page will open after that when the password will change then readirect login page.  ;; COMPLETE FLOW (Understand First)
+Step-by-step:
+User clicks Forgot Password
+Enters email
+System checks:
+Email exists or not
+Attempts < 3 per day
+Generate OTP
+Save OTP in database with expiry (2 min)
+Send OTP using PHPMailer
+Redirect → OTP verification page
+User enters OTP
+System checks:
+OTP correct
+Not expired
+If valid → Redirect to Reset Password page
+User sets new password
+Update password → Redirect to login  ;;; FILE STRUCTURE : /forgot-password/
+    forgot_password.php     (enter email)
+    send_otp.php            (process email + send OTP)
+    verify_otp.php          (enter OTP)
+    check_otp.php           (verify OTP logic)
+    reset_password.php      (new password form)
+    update_password.php     (update DB)
+
+/config/
+    db.php
+    mail_config.php
+
+/phpmailer/ 
+    Exception.php
+    PHPMailer.php
+    SMTP.php  
