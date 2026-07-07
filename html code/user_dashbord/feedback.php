@@ -21,7 +21,7 @@ $success_message = '';
 $error_message = '';
 
 // Handle form submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_feedback'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST' && isset($_POST['submit_feedback'])) {
     // Get and sanitize input
     $name = mysqli_real_escape_string($con, trim($_POST['name']));
     $email = mysqli_real_escape_string($con, trim($_POST['email']));

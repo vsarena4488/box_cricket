@@ -3,7 +3,7 @@ session_start();
 include_once '../gest/db_config.php';
 require_admin_login();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'POST') {
     header('Location: users_details.php');
     exit();
 }

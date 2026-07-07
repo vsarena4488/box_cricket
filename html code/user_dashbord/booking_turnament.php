@@ -95,7 +95,7 @@ $razorpay_amount_paise = (int) round(((float) $total_amount) * 100);
 $booking_message = '';
 $booking_error = '';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['book_seat'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST' && isset($_POST['book_seat'])) {
     $selected_seat = isset($_POST['seat_number']) ? trim($_POST['seat_number']) : '';
     $payment_method = isset($_POST['payment_method']) ? trim($_POST['payment_method']) : 'qr';
     $transaction_id = isset($_POST['transaction_id']) ? trim($_POST['transaction_id']) : '';

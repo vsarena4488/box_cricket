@@ -34,7 +34,7 @@ $admin_id = $_SESSION['user_id'] ?? 0;
 // ============================================
 
 // Update Feedback Status
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_feedback'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST' && isset($_POST['update_feedback'])) {
     $feedback_id = (int)$_POST['feedback_id'];
     $status = mysqli_real_escape_string($con, $_POST['status']);
     $admin_reply = mysqli_real_escape_string($con, $_POST['admin_reply']);

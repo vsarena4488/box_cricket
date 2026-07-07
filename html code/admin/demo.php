@@ -238,6 +238,6 @@
 <body>
 
 <div class="admin-wrapper">
-    <?php include 'sidebar.php'; ?>
+    <?php include 'nevbar.php'; ?>
     
     <div class="main-content">

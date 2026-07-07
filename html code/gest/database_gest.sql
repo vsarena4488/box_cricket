@@ -1,8 +1,8 @@
-CREATE DATABASE box_cricket;
+CREATE DATABASE IF NOT EXISTS box_cricket;
 USE box_cricket;
 
 -- TOURNAMENT TABLE
-CREATE TABLE tournaments (
+CREATE TABLE IF NOT EXISTS tournaments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     team1 VARCHAR(100),
     team2 VARCHAR(100),
@@ -15,7 +15,7 @@ CREATE TABLE tournaments (
 );
 
 -- CONTACT TABLE
-CREATE TABLE contact_messages (
+CREATE TABLE IF NOT EXISTS contact_messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100),
     email VARCHAR(100),

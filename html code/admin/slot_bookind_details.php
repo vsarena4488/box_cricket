@@ -34,7 +34,7 @@ $admin_id = $_SESSION['user_id'] ?? 0;
 // ============================================
 
 // Update Booking Status
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_booking_status'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST' && isset($_POST['update_booking_status'])) {
     $booking_id = (int)$_POST['booking_id'];
     $booking_status = mysqli_real_escape_string($con, $_POST['booking_status']);
     $payment_status = mysqli_real_escape_string($con, $_POST['payment_status']);

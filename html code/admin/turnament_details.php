@@ -34,7 +34,7 @@ $admin_id = $_SESSION['user_id'] ?? 0;
 // ============================================
 
 // Add Match
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_match'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST' && isset($_POST['add_match'])) {
     $team1_name = mysqli_real_escape_string($con, $_POST['team1_name']);
     $team2_name = mysqli_real_escape_string($con, $_POST['team2_name']);
     $match_type = mysqli_real_escape_string($con, $_POST['match_type']);
@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_match'])) {
 }
 
 // Update Match
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_match'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST' && isset($_POST['update_match'])) {
     $id = (int)$_POST['match_id'];
     $team1_name = mysqli_real_escape_string($con, $_POST['team1_name']);
     $team2_name = mysqli_real_escape_string($con, $_POST['team2_name']);

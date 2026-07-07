@@ -12,7 +12,7 @@ $error = '';
 $email = $_SESSION['reset_email'];
 $user_id = $_SESSION['reset_user_id'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST') {
     $otp = trim($_POST['otp']);
     
     if (empty($otp)) {

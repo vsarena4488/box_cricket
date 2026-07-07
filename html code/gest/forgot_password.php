@@ -9,7 +9,7 @@ unset($_SESSION['reset_attempts']);
 $error = '';
 $success = '';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST') {
     $email = mysqli_real_escape_string($con, trim($_POST['email']));
     
     if (empty($email)) {

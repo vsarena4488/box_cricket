@@ -12,7 +12,7 @@ $error = '';
 $success = '';
 $user_id = $_SESSION['reset_user_id'];
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST') {
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     

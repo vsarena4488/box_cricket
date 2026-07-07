@@ -7,7 +7,7 @@ $name_err = $email_err = $message_err = "";
 $success_msg = $error_msg = "";
 
 // Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if (($_SERVER["REQUEST_METHOD"] ?? "GET") === "POST") {
     
     // Validate Name
     if (empty($_POST['fullname'])) {
@@ -44,29 +44,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // If no errors, insert into database
     if (empty($name_err) && empty($email_err) && empty($message_err)) {
-        
-        $contact_stmt = mysqli_prepare($conn, "INSERT INTO contact_messages (name, email, message) VALUES (?, ?, ?)");
+        $contact_stmt = null;
 
-        if ($contact_stmt) {
+        try {
+            $contact_stmt = mysqli_prepare($con, "INSERT INTO contact_messages (name, email, message) VALUES (?, ?, ?)");
+
+            if (!$contact_stmt) {
+                throw new mysqli_sql_exception(mysqli_error($con));
+            }
+
             mysqli_stmt_bind_param($contact_stmt, "sss", $name, $email, $message);
-        }
 
-        if ($contact_stmt && mysqli_stmt_execute($contact_stmt)) {
-            $success_msg = "Message sent successfully! We'll get back to you soon.";
-            // Clear form fields
-            $name = $email = $message = "";
-        } else {
+            if (mysqli_stmt_execute($contact_stmt)) {
+                $success_msg = "Message sent successfully! We'll get back to you soon.";
+                $name = $email = $message = "";
+            } else {
+                throw new mysqli_sql_exception(mysqli_stmt_error($contact_stmt));
+            }
+        } catch (mysqli_sql_exception $e) {
+            error_log("Contact form insert failed: " . $e->getMessage());
             $error_msg = "Something went wrong. Please try again later.";
-        }
-
-        if ($contact_stmt) {
-            mysqli_stmt_close($contact_stmt);
+        } finally {
+            if ($contact_stmt) {
+                mysqli_stmt_close($contact_stmt);
+            }
         }
     }
 }
 ?>
-<?php include 'nevbar.php'; ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -115,6 +120,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+
+    <?php include 'nevbar.php'; ?>
 
     <!-- this is carousel section  -->
 
@@ -249,7 +256,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                       AND status = 'upcoming'
                       ORDER BY match_date ASC
                       LIMIT 3";
-                $result = mysqli_query($conn, $query);
+                $result = mysqli_query($con, $query);
 
                 // Check if there are any upcoming matches
                 if ($result && mysqli_num_rows($result) > 0) {
@@ -455,7 +462,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             <!-- Right Side - Contact Form -->
             <div class="col-md-6">
-                <form id="contactForm" action="<?php echo h($_SERVER['PHP_SELF']); ?>" method="post">
+                <form id="contactForm" action="gest.php" method="post">
                     <!-- Name Field -->
                     <div class="mb-3">
                         <input type="text" class="form-control <?php echo !empty($name_err) ? 'is-invalid' : ''; ?>" 
@@ -568,8 +575,8 @@ document.getElementById('contactForm').addEventListener('submit', function(e) {
     <script src="../javascript/jquery-4.0.0.js"></script>
     <script src="../javascript/validation.js"></script>
 
+    <?php include 'footer.php'; ?>
+
 </body>
 
 </html>
-
-<?php include 'footer.php'; ?>

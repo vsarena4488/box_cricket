@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 include_once 'db_config.php';
 
 // Check if user is logged in
@@ -77,7 +77,7 @@ if (!$booking) {
 }
 
 // Handle payment method selection from POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['select_payment'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST' && isset($_POST['select_payment'])) {
     $posted_payment = isset($_POST['payment_method']) ? trim($_POST['payment_method']) : '';
     if (in_array($posted_payment, $allowed_payment_methods, true)) {
         $selected_payment = $posted_payment;
@@ -124,7 +124,7 @@ if ($payments_table_exists) {
 }
 
 // Process payment
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['confirm_payment'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST' && isset($_POST['confirm_payment'])) {
     $payment_method = isset($_POST['payment_method']) ? trim($_POST['payment_method']) : '';
     $transaction_id = isset($_POST['transaction_id']) ? mysqli_real_escape_string($con, $_POST['transaction_id']) : '';
     $cash_confirm = isset($_POST['cash_confirm']) ? $_POST['cash_confirm'] : '';

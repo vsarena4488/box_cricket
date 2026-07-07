@@ -75,7 +75,7 @@ $review_rating = isset($_POST['review_rating']) ? (int) $_POST['review_rating'] 
 $review_text = isset($_POST['review_text']) ? trim($_POST['review_text']) : '';
 
 // Handle review submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_review'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['submit_review'])) {
     $review_errors = [];
 
     if ($user_id <= 0) {
@@ -152,7 +152,7 @@ $price_per_hour = (float)$ground['price_per_hour'];
 $total_amount = $price_per_hour * max(1, $selected_duration);
 
 // Handle form submission
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_ground'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST' && isset($_POST['book_ground'])) {
     // Validate inputs
     $errors = [];
     

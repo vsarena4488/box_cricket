@@ -39,7 +39,7 @@ $admin_id = $_SESSION['user_id'] ?? 0;
 // ============================================
 
 // Add Ground
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_ground'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST' && isset($_POST['add_ground'])) {
     $name = mysqli_real_escape_string($con, $_POST['name']);
     $location = mysqli_real_escape_string($con, $_POST['location']);
     $ground_type = mysqli_real_escape_string($con, $_POST['ground_type']);
@@ -96,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_ground'])) {
 }
 
 // Update Ground
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_ground'])) {
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') == 'POST' && isset($_POST['update_ground'])) {
     $id = (int)$_POST['ground_id'];
     $name = mysqli_real_escape_string($con, $_POST['name']);
     $location = mysqli_real_escape_string($con, $_POST['location']);
